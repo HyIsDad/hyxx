@@ -1,0 +1,51 @@
+<!DOCTYPE html>  <!-- 声明这是HTML5网页 -->
+<html>  <!-- 网页开始 -->
+
+<head>
+    <meta charset="UTF-8">  <!-- 设置编码，防止中文乱码 -->
+    <title>Flask学习</title>  <!-- 浏览器标签页标题 -->
+</head>
+
+<body>
+
+<h2>用户数据表</h2>  <!-- 页面标题 -->
+
+<table border="1">  <!-- 创建表格，1像素边框 -->
+    <thead>  <!-- 表头 -->
+        <tr>  <!-- 一行 -->
+            <th>姓名</th>  <!-- 表头列1 -->
+            <th>年龄</th>  <!-- 表头列2 -->
+        </tr>
+    </thead>
+
+    <tbody id="tbody">  <!-- 表格主体（JS会往这里塞数据） -->
+    </tbody>
+
+</table>
+
+<script>  <!-- JavaScript开始 -->
+
+fetch('/data')  // 向Flask请求 /data 接口（拿Python数据）
+.then(res => res.json())  // 把返回结果转成JSON格式
+.then(data => {  // data就是Python返回的数据
+
+    let html = ''  // 定义空字符串，用来拼接表格HTML
+
+    data.forEach(item => {  // 循环每一条数据（类似Python for）
+
+        html += `  <!-- 拼接一行表格 -->
+        <tr>
+            <td>${item.name}</td>  <!-- 显示姓名 -->
+            <td>${item.age}</td>   <!-- 显示年龄 -->
+        </tr>
+        `
+    })
+
+    document.getElementById('tbody').innerHTML = html  // 把拼好的HTML放进表格
+
+})
+
+</script>
+
+</body>
+</html>
